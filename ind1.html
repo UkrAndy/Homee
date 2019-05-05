@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+    class Client {
+        constructor(id = "-", name = "unknown", money = 0) {
+            Object.defineProperty(this, "ID", { value: id });
+            this.Name = name;
+            Object.defineProperty(this, "Money",
+                {  
+                    get: function () {
+                        return money;
+                    },
+                    set: function (value) {
+                        if (value >= 0) {
+                            money = value;
+                        }
+                        else
+                            throw new Error("Money must be >=0");
+                    }
+                })
+            this.Money = money  
+        }
+
+        addMoney(value) {
+            this.money += value
+        }
+        cashWithdrawal(value) {
+            if (value > this.money) throw new Error('Not enought money')
+            this.money -= value
+        }
+        toString() {
+            return `${this.Name} -Self money= ${this.Money}`;
+        }
+    }
+    //---------------------------
+
+    class GoldenClient extends Client {
+        constructor(id = "-", name = "unknown", money = 0, limit = 0, ) {
+            super(id, name, money); 
+            this.persents = 0
+            
+            Object.defineProperty(this, "Limit",
+                {
+                    value: limit
+                });
+            this.allMoney = this.Money + this.Limit
+        }
+        cashWithdrawal(value) {
+            if (value > this.money + this.limit) throw new Error('Not enought money')
+            this.allMoney -= value
+        }
+        determineFine() {
+            if (this.allMoney < this.limit) 
+            {
+                this.persents = (this.limit-this.allMoney) * 0.2
+            } //////////не виконується
+
+        }
+        toString() {
+            return super.toString() + "///Credit limit=" + this.Limit + "///Balans=" + this.allMoney + "///Persent for credit limit=" + this.persents;
+        }
+    }
+    //----------------
+    //Хочу зняти-2000
+    //Мої гроші-1500
+    //Кредитний ліміт-4000
+    //Всіх грошей після першого зняття-3000(тобто мінус 1000 з кредитного ліміту)
+    //Повинно цей недостаток з кредитного ліміту * 0.2 ---------
+
+    //===================================
+
+    var goldClient = new GoldenClient("1221", "Ivan", 1500, 4000);
+    goldClient.cashWithdrawal(2000)
+    goldClient.determineFine()
+    document.write(goldClient);
+
+</script>
+
+</head>
+<body>
+    
+</body>
+</html>
