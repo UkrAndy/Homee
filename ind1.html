@@ -27,11 +27,11 @@
         }
 
         addMoney(value) {
-            this.money += value
+            this.Money += value  //Назва властивості з великої літери!!  
         }
         cashWithdrawal(value) {
-            if (value > this.money) throw new Error('Not enought money')
-            this.money -= value
+            if (value > this.Money) throw new Error('Not enought money')
+            this.Money -= value
         }
         toString() {
             return `${this.Name} -Self money= ${this.Money}`;
@@ -51,7 +51,7 @@
             this.allMoney = this.Money + this.Limit
         }
         cashWithdrawal(value) {
-            if (value > this.money + this.limit) throw new Error('Not enought money')
+            if (value > this.money + this.limit) throw new Error('Not enought money')  Переглянь ще раз усі назви (тут також помилка)
             this.allMoney -= value
         }
         determineFine() {
